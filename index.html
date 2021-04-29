@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="loadNames()">Get data</button>
+    <ul>
+
+    </ul>
+
+    <script>
+        const url = 'https://rickandmortyapi.com/api/character/?page='; 
+        let pageNum = 0;
+
+        function loadNames() {
+            const btn = document.querySelector('button')
+            btn.innerText = 'Getting data...'
+
+            fetch(url + pageNum)
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (res) {
+                    btn.innerText = 'Get data'
+
+                    if (res.error) {
+                        btn.disabled = true
+                    }
+
+                    const ul = document.querySelector('ul')
+
+                    res.results.forEach(el => {
+                        const li = document.createElement('li');
+                        li.innerText = el.name;
+                        ul.append(li)
+                    });
+
+                    pageNum = pageNum + 1;
+                })
+
+        }
+    
+    </script>
+</body>
+
+</html>
